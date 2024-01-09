@@ -32,13 +32,26 @@ if(isset($_REQUEST["kustuta"])){
     $kask->execute();
 }
 
-if(isset($_REQUEST["paarinimi"]) && !empty($_REQUEST["paarinimi"]) && isAdmin()){
+if(isset($_REQUEST["paarinimi"]) && !empty($_REQUEST["paarinimi"])){
     global $yhendus;
     $kask=$yhendus->prepare("INsert INTO tantsud (tantsupaar,ava_paev) Values(?,NOW())");
     $kask->bind_param("s",$_REQUEST["paarinimi"]);
     $kask->execute();
 }
 
+
+
+//kommentaaride
+if(isset($_REQUEST["komment"])) {
+    if(!empty($_REQUEST["uuskomment"])) {
+
+        global $yhendus;
+        $kask = $yhendus->prepare("UPDATE tantsud SET komentaarid=CONCAT(komentaarid,?) WHERE id=?");
+        $komentaaridplus = $_REQUEST["uuskomment"]."\n";
+        $kask->bind_param("si", $komentaaridplus, $_REQUEST["komment"]);
+        $kask->execute();
+    }
+}
 function isAdmin(){
     return isset($_SESSION['onAdmin']) && $_SESSION['onAdmin'];
 }
@@ -133,10 +146,11 @@ while ($kask->fetch()){
     echo "<td>".$tantsupaar."</td>";
     echo "<td>".$punktid."</td>";
     echo "<td>".$paev."</td>";
-    echo "<td>".$komentaarid."</td>";
+    echo "<td>".nl2br(htmlspecialchars($komentaarid));
 if (!isAdmin()) {
     echo "<td> <form action='?'>
        <input type='hidden' value='$id' name='komment'> 
+       <label for='uuskomment'>Lisa uus komment:  </label>
         <input type='text' name='uuskomment' id='uuskomment'> <br>
         <input type='submit' value='Ok'>
     </form>";

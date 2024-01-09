@@ -15,6 +15,16 @@ if(isset($_REQUEST["punktid0"])){
     $yhendus->close();
     exit();
 }
+
+if(isset($_REQUEST["komment0"])){
+    global $yhendus;
+    $kask=$yhendus->prepare("UPDATE tantsud SET komentaarid='' WHERE id=?");
+    $kask->bind_param("i",$_REQUEST["komment0"]);
+    $kask->execute();
+    header("Location: $_SERVER[PHP_SELF]");
+    $yhendus->close();
+    exit();
+}
 //peitmine
 if(isset($_REQUEST["peitmine"])){
     global $yhendus;
@@ -102,6 +112,7 @@ if(isset($_REQUEST["naitmine"])){
         echo "<td>".$komment."</td>";
         echo "<td>".$avalik."/".$tekst2."</td>";
         echo "<td><a href='?punktid0=$id'>PUnktid Nulliks!</a></td>";
+        echo "<td><a href='?komment0=$id'>Kustuta Komment</a></td>";
         echo "<td><a href='?$seisunud=$id'>$tekst</a></td>";
         echo "</tr>";
     }
