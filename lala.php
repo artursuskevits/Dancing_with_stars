@@ -2,8 +2,6 @@
 require_once ('conf.php');
 global $yhendus;
 
-
-
 //punktide lisamine
 if(isset($_REQUEST["heatants"])){
     global $yhendus;
@@ -82,6 +80,20 @@ function isAdmin(){
                 closeModal();
             }
         };
+        function openModal2() {
+            document.getElementById("myModal2").style.display = "block";
+        }
+
+        function closeModal2() {
+            document.getElementById("myModal2").style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            var modal = document.getElementById("myModal2");
+            if (event.target == modal) {
+                closeModal2();
+            }
+        };
     </script>
 </head>
 
@@ -90,6 +102,12 @@ function isAdmin(){
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         <?php include('login.php'); ?>
+    </div>
+</div>
+<div id="myModal2" class="modal2">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <?php include('Registrationform.php'); ?>
     </div>
 </div>
 <h1>Tantsud tähtega</h1>
@@ -103,6 +121,19 @@ function isAdmin(){
     } else {
         ?>
         <a href="#" onclick="openModal()">Logi sisse</a>
+
+        <?php
+    }
+    ?>
+
+    <?php
+    if(isset($_SESSION['kasutaja'])){
+        ?>
+        <a href="logout.php"></a>
+        <?php
+    } else {
+        ?>
+        <a href="#" onclick="openModal2()">Registration</a>
 
         <?php
     }

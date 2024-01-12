@@ -1,10 +1,7 @@
-
-<link rel="stylesheet" href="loginstyle.css">
 <?php
 require_once("conf.php");
 global $yhendus;
 session_start();
-
 //kontrollime kas väljad  login vormis on täidetud
 if (!empty($_POST['login']) && !empty($_POST['pass'])) {
     //eemaldame kasutaja sisestusest kahtlase pahna
@@ -40,6 +37,7 @@ if (!empty($_POST['login']) && !empty($_POST['pass'])) {
     }
 }
 ?>
+<link rel="stylesheet" href="loginstyle.css">
 <h1>Login</h1>
 <form action="" method="post">
     Login: <input type="text" name="login"><br>
