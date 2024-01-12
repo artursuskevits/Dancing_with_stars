@@ -136,8 +136,7 @@ if (isset($_SESSION["kasutaja"]))
     </tr>
 <?php
 global $yhendus;
-$kask=$yhendus->prepare("SELECT id, tantsupaar,
- punktid,ava_paev,komentaarid from tantsud WHERE avalik =1");
+$kask=$yhendus->prepare("SELECT id, tantsupaar, punktid,ava_paev,komentaarid from tantsud WHERE avalik =1;");
 $kask->bind_result($id,$tantsupaar,$punktid,$paev,$komentaarid);
 $kask->execute();
 while ($kask->fetch()){
